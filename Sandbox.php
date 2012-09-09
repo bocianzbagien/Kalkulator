@@ -4,21 +4,17 @@ if (isset($_SESSION['odwiedzin']))
     {
         $_SESSION['odwiedzin']++;
     }
-    else $_SESSION['odwiedzin'] = 1; 
+    else $_SESSION['odwiedzin'] = 1;
+include 'wyswietlaniebledow.php';
 ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Kalkulator by Piotr ver 0.1</title>
-        
-        <style type="text/css">
-            h1 {color:ForestGreen ;}
-            .err {color: #FF0000;}
-            body {background-color: Beige ; text-align: center;};
-        </style>
+        <link rel="stylesheet" type="text/css" href="res/style.css" />
     </head>
     <body>
-                
+<?php include('./menu.html') ?>                
 <?php 
 //Walidacja
 
@@ -136,25 +132,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 echo "Zapis do bazy udany!";
                     else echo "dupa, coś nie działa ".mysql_error();
             mysql_close();
-        };        
-?>
-        OK, to teraz zobaczmy ja wcześniejsi użytkownicy bawili się kalkulatorem! Sam robiłeś to 
-                                                                            <?php echo $_SESSION['odwiedzin']; ?> 
-                                                                                razy.<br /> 
-        Czek dis out!: <br />
-        
-<?php
-//Wypluwanie wyników z bazy
-    mysql_connect('localhost', 'root', 'haslo')or die('Błąd !: ' . mysql_error());
-    mysql_select_db("test");
-    $dobazy = mysql_query("SELECT * FROM wyniki");
-    
-    while ($linia = mysql_fetch_array($dobazy))
-        {
-            echo $linia['id']. " " . $linia['Liczba1'] . " " . $linia['Liczba2']. " " . $linia['rodzajdzialania']. " " . $linia['wynik']. " " . date($linia['data'])."<br />";
         };
-    mysql_close();
-?> 
+
+?>
+        Stronę odwiedziłeś:  <?php echo $_SESSION['odwiedzin']; ?>  razy.<br /> 
+
         
+               
+<span class="err"><?php if(isset($blad)) echo $blad; ?></span><br />
+
+
+
     </body>
 </html>

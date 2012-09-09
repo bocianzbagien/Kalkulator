@@ -1,0 +1,14 @@
+/* 
+    Document   : style
+    Created on : 2012-09-09, 23:16:18
+    Author     : Piotr
+    Description:
+        Purpose of the stylesheet follows.
+*/
+root { 
+    display: block;
+}
+            h1 {color:ForestGreen ;}
+            .err {color: #FF0000;}
+            body {background-color: Beige ; text-align: center;};
+
