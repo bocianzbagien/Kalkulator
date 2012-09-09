@@ -120,15 +120,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                       dzielenie ($_POST["liczba1"], $_POST["liczba2"]);
                       break;
                 };
-            echo $wynik;
-        }; 
-        
-   
-        
-      
             
-        
+                echo "<h1> Wynik:".$wynik."</h1>";
+            
+            mysql_connect('localhost', 'root', 'haslo')or die('Błąd !: ' . mysql_error());
+            mysql_select_db("test");
+            $dobazy =  
+                    "
+                        INSERT 
+                        INTO wyniki (Liczba1, Liczba2, rodzajdzialania, wynik) 
+                        VALUES ( '$_POST[liczba1]', '$_POST[liczba2]', '$_POST[jakieDzialanie]', '$wynik')
+                    ";
+            if (mysql_query($dobazy))
+                echo "Zapis do bazy udany!";
+                    else echo "dupa, coś nie działa".mysql_error();
+            mysql_close();
+        };        
 ?>
+        OK, to teraz zobaczmy ja wcześniejsi użytkownicy bawili się kalkulatorem! Czek dis out!: <br />
+        
+<?php
+    mysql_connect('localhost', 'root', 'haslo')or die('Błąd !: ' . mysql_error());
+    mysql_select_db("test");
+    $dobazy = mysql_query("SELECT * FROM wyniki");
+    
+    while ($linia = mysql_fetch_array($dobazy))
+        {
+            echo $linia['id']. " " . $linia['Liczba1'] . " " . $linia['Liczba2']. " " . $linia['rodzajdzialania']. " " . $linia['wynik']. " " . date($linia['data'])."<br />";
+        };
+    mysql_close();
+?> 
         
     </body>
 </html>
